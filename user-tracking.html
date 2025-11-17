@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking Paket - Logistic Corner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-box-open text-3xl"></i>
+                    <div>
+                        <h1 class="text-xl font-bold">Tracking Paket</h1>
+                        <p class="text-sm text-blue-100">Logistic Corner - Politeknik Negeri Lampung</p>
+                    </div>
+                </div>
+                <a href="login.html" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-50 transition">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Login Admin
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-6 text-center">
+            <i class="fas fa-search text-6xl text-blue-600 mb-4"></i>
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Lacak Paket Anda</h2>
+            <p class="text-gray-600">Masukkan nomor resi atau NIM untuk melacak status paket Anda</p>
+        </div>
+
+        <!-- Search Form -->
+        <div class="max-w-2xl mx-auto mb-8">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <form id="trackingForm" class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">
+                            <i class="fas fa-barcode mr-2"></i>Nomor Resi atau NIM
+                        </label>
+                        <input 
+                            type="text" 
+                            id="trackingInput" 
+                            placeholder="Contoh: JNE1234567890 atau 2141001"
+                            class="w-full border-2 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            required
+                        >
+                        <p class="text-sm text-gray-500 mt-2">
+                            <i class="fas fa-info-circle mr-1"></i>Anda bisa menggunakan nomor resi atau NIM untuk mencari paket
+                        </p>
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition duration-300"
+                    >
+                        <i class="fas fa-search mr-2"></i>Cari Paket
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-lg shadow-lg p-6 mb-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-gray-800">
+                            <i class="fas fa-box mr-2"></i>Hasil Pencarian
+                        </h3>
+                        <button id="clearResults" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div id="resultsContent"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Cards -->
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-clock text-3xl text-blue-600"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Jam Operasional</h3>
+                <p class="text-gray-600">Senin - Jumat</p>
+                <p class="text-gray-600">08:00 - 16:00 WIB</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-map-marker-alt text-3xl text-green-600"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Lokasi</h3>
+                <p class="text-gray-600">Gedung Logistic Corner</p>
+                <p class="text-gray-600">Politeknik Negeri Lampung</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-money-bill text-3xl text-orange-600"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Informasi Denda</h3>
+                <p class="text-gray-600">Rp 1.000/hari</p>
+                <p class="text-sm text-gray-500">Setelah hari pertama</p>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="max-w-4xl mx-auto mt-8">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-question-circle mr-2 text-blue-600"></i>Pertanyaan Umum
+                </h3>
+                
+                <div class="space-y-4">
+                    <div class="border-b pb-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Bagaimana cara mengambil paket?</h4>
+                        <p class="text-gray-600">Datang ke Logistic Corner dengan membawa KTM/KTP dan nomor resi paket Anda pada jam operasional.</p>
+                    </div>
+
+                    <div class="border-b pb-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Berapa lama paket bisa disimpan?</h4>
+                        <p class="text-gray-600">Paket dapat disimpan tanpa denda selama 1 hari. Setelah itu akan dikenakan denda Rp 1.000/hari.</p>
+                    </div>
+
+                    <div class="border-b pb-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Apakah ada notifikasi saat paket tiba?</h4>
+                        <p class="text-gray-600">Ya, sistem akan mengirim notifikasi via WhatsApp/Email saat paket Anda tiba (jika nomor WhatsApp terdaftar).</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-2">Bagaimana jika lupa nomor resi?</h4>
+                        <p class="text-gray-600">Anda bisa melakukan tracking menggunakan NIM Anda atau hubungi petugas Logistic Corner.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">&copy; 2024 Logistic Corner - Politeknik Negeri Lampung</p>
+            <p class="text-gray-400 text-sm">Dikembangkan untuk meningkatkan pelayanan logistik kampus</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample data (in production, this would come from database via API)
+        const packages = [
+            {
+                id: 1,
+                nomor_resi: "JNE1234567890",
+                nama_penerima: "Budi Santoso",
+                nim_nip: "2141001",
+                kurir: "JNE",
+                berat_paket: 2.5,
+                no_whatsapp: "081234567890",
+                tanggal_masuk: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+                catatan: "Paket besar",
+                status: "belum_diambil"
+            },
+            {
+                id: 2,
+                nomor_resi: "JNTX987654321",
+                nama_penerima: "Siti Aminah",
+                nim_nip: "2141002",
+                kurir: "J&T",
+                berat_paket: 1.0,
+                no_whatsapp: "082345678901",
+                tanggal_masuk: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+                catatan: "",
+                status: "belum_diambil"
+            },
+            {
+                id: 3,
+                nomor_resi: "SPX555666777",
+                nama_penerima: "Ahmad Fauzi",
+                nim_nip: "2141003",
+                kurir: "Shopee Express",
+                berat_paket: 0.5,
+                no_whatsapp: "083456789012",
+                tanggal_masuk: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+                tanggal_diambil: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+                catatan: "",
+                status: "sudah_diambil",
+                denda_dibayar: 2000
+            }
+        ];
+
+        // Calculate fine
+        function calculateFine(tanggalMasuk) {
+            const now = new Date();
+            const masuk = new Date(tanggalMasuk);
+            const diffDays = Math.floor((now - masuk) / (1000 * 60 * 60 * 24));
+            const dendaDays = Math.max(0, diffDays - 1);
+            return dendaDays * 1000;
+        }
+
+        // Format currency
+        function formatRupiah(amount) {
+            return 'Rp ' + amount.toLocaleString('id-ID');
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleString('id-ID', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Tracking form submit
+        document.getElementById('trackingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const query = document.getElementById('trackingInput').value.trim().toLowerCase();
+            
+            if (!query) {
+                alert('Mohon masukkan nomor resi atau NIM!');
+                return;
+            }
+
+            // Search packages
+            const results = packages.filter(p => 
+                p.nomor_resi.toLowerCase().includes(query) ||
+                p.nim_nip.toLowerCase().includes(query) ||
+                p.nama_penerima.toLowerCase().includes(query)
+            );
+
+            displayResults(results);
+        });
+
+        // Display results
+        function displayResults(results) {
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsContent = document.getElementById('resultsContent');
+
+            if (results.length === 0) {
+                resultsContent.innerHTML = `
+                    <div class="text-center py-8">
+                        <i class="fas fa-exclamation-triangle text-6xl text-yellow-500 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Paket Tidak Ditemukan</h3>
+                        <p class="text-gray-600">Paket dengan nomor resi atau NIM yang Anda cari tidak ditemukan.</p>
+                        <p class="text-sm text-gray-500 mt-2">Pastikan nomor yang Anda masukkan benar atau hubungi petugas Logistic Corner.</p>
+                    </div>
+                `;
+            } else {
+                resultsContent.innerHTML = results.map(pkg => {
+                    const denda = pkg.status === 'belum_diambil' ? calculateFine(pkg.tanggal_masuk) : (pkg.denda_dibayar || 0);
+                    const lamaDays = Math.floor((new Date() - new Date(pkg.tanggal_masuk)) / (1000 * 60 * 60 * 24));
+                    
+                    return `
+                        <div class="border rounded-lg p-6 mb-4 hover:shadow-lg transition">
+                            <!-- Header -->
+                            <div class="flex justify-between items-start mb-4 pb-4 border-b">
+                                <div>
+                                    <h4 class="text-2xl font-bold text-gray-800 mb-1">${pkg.nomor_resi}</h4>
+                                    <p class="text-gray-600">
+                                        <i class="fas fa-shipping-fast mr-2"></i>${pkg.kurir}
+                                    </p>
+                                </div>
+                                <span class="px-4 py-2 rounded-lg font-semibold ${
+                                    pkg.status === 'sudah_diambil' 
+                                    ? 'bg-green-100 text-green-800' 
+                                    : denda > 0 
+                                    ? 'bg-red-100 text-red-800' 
+                                    : 'bg-yellow-100 text-yellow-800'
+                                }">
+                                    ${pkg.status === 'sudah_diambil' ? '✓ Sudah Diambil' : '⏱ Belum Diambil'}
+                                </span>
+                            </div>
+
+                            <!-- Info Grid -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-1">
+                                        <i class="fas fa-user mr-2"></i>Penerima
+                                    </p>
+                                    <p class="font-semibold text-gray-800">${pkg.nama_penerima}</p>
+                                </div>
+                                
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-1">
+                                        <i class="fas fa-id-card mr-2"></i>NIM/NIP
+                                    </p>
+                                    <p class="font-semibold text-gray-800">${pkg.nim_nip}</p>
+                                </div>
+                                
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-1">
+                                        <i class="fas fa-calendar mr-2"></i>Tanggal Masuk
+                                    </p>
+                                    <p class="font-semibold text-gray-800">${formatDate(pkg.tanggal_masuk)}</p>
+                                </div>
+                                
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-1">
+                                        <i class="fas fa-hourglass-half mr-2"></i>Lama di Logistic Corner
+                                    </p>
+                                    <p class="font-semibold text-gray-800">${lamaDays} hari</p>
+                                </div>
+
+                                ${pkg.berat_paket ? `
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-1">
+                                        <i class="fas fa-weight mr-2"></i>Berat Paket
+                                    </p>
+                                    <p class="font-semibold text-gray-800">${pkg.berat_paket} kg</p>
+                                </div>
+                                ` : ''}
+
+                                ${pkg.status === 'sudah_diambil' ? `
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-1">
+                                        <i class="fas fa-check-circle mr-2"></i>Tanggal Diambil
+                                    </p>
+                                    <p class="font-semibold text-gray-800">${formatDate(pkg.tanggal_diambil)}</p>
+                                </div>
+                                ` : ''}
+                            </div>
+
+                            <!-- Fine Alert -->
+                            <div class="p-4 rounded-lg ${
+                                pkg.status === 'sudah_diambil' 
+                                ? 'bg-green-50 border border-green-200' 
+                                : denda > 0 
+                                ? 'bg-red-50 border border-red-200' 
+                                : 'bg-blue-50 border border-blue-200'
+                            }">
+                                <div class="flex items-start">
+                                    <i class="fas ${
+                                        pkg.status === 'sudah_diambil' 
+                                        ? 'fa-check-circle text-green-600' 
+                                        : denda > 0 
+                                        ? 'fa-exclamation-triangle text-red-600' 
+                                        : 'fa-info-circle text-blue-600'
+                                    } text-2xl mr-3 mt-1"></i>
+                                    <div class="flex-1">
+                                        <p class="font-semibold ${
+                                            pkg.status === 'sudah_diambil' 
+                                            ? 'text-green-800' 
+                                            : denda > 0 
+                                            ? 'text-red-800' 
+                                            : 'text-blue-800'
+                                        } mb-1">
+                                            ${pkg.status === 'sudah_diambil' 
+                                                ? 'Paket Sudah Diambil' 
+                                                : denda > 0 
+                                                ? 'Perhatian: Ada Denda' 
+                                                : 'Paket Tersedia untuk Diambil'
+                                            }
+                                        </p>
+                                        ${pkg.status === 'sudah_diambil' ? `
+                                            <p class="text-sm ${pkg.denda_dibayar > 0 ? 'text-gray-700' : 'text-green-700'}">
+                                                Paket telah diambil pada ${formatDate(pkg.tanggal_diambil)}. 
+                                                ${pkg.denda_dibayar > 0 ? `Denda yang dibayar: ${formatRupiah(pkg.denda_dibayar)}` : 'Tidak ada denda.'}
+                                            </p>
+                                        ` : denda > 0 ? `
+                                            <p class="text-sm text-red-700">
+                                                Denda saat ini: <strong class="text-lg">${formatRupiah(denda)}</strong>
+                                            </p>
+                                            <p class="text-xs text-red-600 mt-1">
+                                                Silakan ambil paket Anda segera untuk menghindari penambahan denda.
+                                            </p>
+                                        ` : `
+                                            <p class="text-sm text-blue-700">
+                                                Paket Anda sudah bisa diambil di Logistic Corner. Tidak ada denda saat ini.
+                                            </p>
+                                        `}
+                                    </div>
+                                </div>
+                            </div>
+
+                            ${pkg.catatan ? `
+                            <div class="mt-4 p-3 bg-gray-50 rounded">
+                                <p class="text-sm text-gray-600">
+                                    <i class="fas fa-sticky-note mr-2"></i><strong>Catatan:</strong> ${pkg.catatan}
+                                </p>
+                            </div>
+                            ` : ''}
+
+                            ${pkg.status === 'belum_diambil' ? `
+                            <div class="mt-4 pt-4 border-t">
+                                <p class="text-sm text-gray-600 flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-2 text-blue-600"></i>
+                                    Silakan ambil paket di Logistic Corner pada jam operasional (Senin-Jumat, 08:00-16:00)
+                                </p>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            resultsSection.classList.remove('hidden');
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Clear results
+        document.getElementById('clearResults').addEventListener('click', function() {
+            document.getElementById('resultsSection').classList.add('hidden');
+            document.getElementById('trackingInput').value = '';
+            document.getElementById('trackingInput').focus();
+        });
+
+        // Focus on input when page loads
+        window.addEventListener('load', function() {
+            document.getElementById('trackingInput').focus();
+        });
+    </script>
+</body>
+</html>
